@@ -72,27 +72,27 @@ python prepare_data.py
 
 ### 1. Train Baseline ResNet-18
 ```bash
-python pipelines/train_baseline.py --dataset cifar10 --model resnet18 --epochs 30 --bs 128 --lr 0.001
+python -m pipelines.train_baseline --dataset cifar10 --model resnet18 --epochs 30 --bs 128 --lr 0.001
 ```
 
 ### 2. Apply Structured Pruning
 ```bash
-python pipelines/prune_structured.py --dataset cifar10 --model resnet18 --sparsity 0.5 --finetune-epochs 8 --ckpt artifacts/resnet18_best.pt
+python -m pipelines.prune_structured --dataset cifar10 --model resnet18 --sparsity 0.5 --finetune-epochs 8 --ckpt artifacts/resnet18_best.pt
 ```
 
 ### 3. Apply Dynamic Quantization
 ```bash
-python pipelines/quantize_dynamic.py --ckpt artifacts/resnet18_best.pt
+python -m pipelines.quantize_int8 --ckpt artifacts/resnet18_best.pt
 ```
 
 ### 4. Knowledge Distillation (ResNet18 → MobileNetV2)
 ```bash
-python pipelines/distill.py --teacher resnet18 --student mobilenetv2 --epochs 20
+python -m pipelines.distill_kd --teacher resnet18 --student mobilenetv2 --epochs 20
 ```
 
 ### 5. Benchmark All Models
 ```bash
-python pipelines/benchmark.py --dataset cifar10 --device cpu --repeat 500     --models artifacts/resnet18_best.pt artifacts/pruned_resnet18.pt artifacts/quantized_resnet18.pt artifacts/kd_mobilenetv2.pt
+python -m pipelines.benchmark --dataset cifar10 --device cpu --repeat 500     --models artifacts/resnet18_best.pt artifacts/pruned_resnet18.pt artifacts/quantized_resnet18.pt artifacts/kd_mobilenetv2.pt
 ```
 
 ### 6. Run Streamlit UI
