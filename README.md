@@ -72,7 +72,7 @@ python prepare_data.py
 
 ### 1. Train Baseline ResNet-18
 ```bash
-python -m pipelines.train_baseline --dataset cifar10 --model resnet18 --epochs 30 --bs 128 --lr 0.001
+python -m pipelines.train_baseline --dataset cifar10 --model resnet18 --epochs 25 --bs 128 --lr 0.001
 ```
 
 ### 2. Apply Structured Pruning
